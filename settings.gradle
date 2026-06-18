@@ -1,0 +1,4 @@
+rootProject.name = 'spring-todo-sample'
+
+include 'todo-sample'
+include 'todo-ex-sample'
