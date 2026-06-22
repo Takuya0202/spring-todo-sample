@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.todo_sample.repository.TodoMapper">
+  <select id="selectAll" resultType="com.example.todo_sample.entity.Todo">
+    select id , todo , detail , created_at as createdAt, updated_at as updatedAt from todos
+  </select>
+
+  <select id="selectById" resultType="com.example.todo_sample.entity.Todo">
+    select id , todo , detail , created_at as createdAt , updated_at as updatedAt
+      from todos where id = #{id}
+  </select>
+
+  <insert id="insert">
+    insert into todos (todo  , detail , created_at , updated_at)
+      values (#{todo} , #{detail} , CURRENT_TIMESTAMP , CURRENT_TIMESTAMP)
+  </insert>
+
+  <update id="update">
+    update todos set todo = #{todo} , detail = #{detail} , updated_at = CURRENT_TIMESTAMP where id = #{id}
+  </update>
+
+  <delete id="delete">
+    delete from todos where id = #{id}
+  </delete>
+</mapper>
