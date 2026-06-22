@@ -1,0 +1,20 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.flywaydb:flyway-database-postgresql:10.20.1'
+        classpath 'org.postgresql:postgresql:42.7.4'
+    }
+}
+
+plugins {
+    id 'org.flywaydb.flyway' version '10.20.1'
+}
+
+flyway {
+    url = 'jdbc:postgresql://localhost:5432/todo_ex_sample'
+    user = 'todo'
+    password = 'todo'
+    locations = ['filesystem:' + project.projectDir + '/db/migration']
+}
