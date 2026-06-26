@@ -77,18 +77,10 @@
 - Packaging: Jar
 - Java: 21
 
-#### todo-sample の依存（Initializr で選択）
+サブごとの固有依存は各サブの `CLAUDE.md` を参照:
 
-- Spring Boot DevTools
-- Lombok
-- Spring Web
-- MyBatis Framework
-- Thymeleaf
-- PostgreSQL Driver
-
-#### todo-ex-sample の依存
-
-Initializr では最小構成で生成し、Yavi / Flyway / Testcontainers などは生成後に手動で `build.gradle` に追記する想定（DDD/オニオン/関数型方針が固まってから確定）。
+- [`todo-sample/CLAUDE.md`](todo-sample/CLAUDE.md)
+- [`todo-ex-sample/CLAUDE.md`](todo-ex-sample/CLAUDE.md)
 
 ### 生成後のクリーンアップ（マルチプロジェクト化）
 
@@ -107,26 +99,17 @@ Initializr の生成物は単独プロジェクト前提なので、ルートに
 
 ---
 
-## todo-sample 固有方針
+## サブプロジェクト固有方針
 
-- プレゼンテーション: Spring MVC + Thymeleaf
-- アーキテクチャ: アプリケーション層 / ドメイン層 / インフラ層の 3 層
-- 参考書の構成・命名を優先する。発展的な工夫は持ち込まない（それは todo-ex-sample 側で行う）。
-- マイグレーションは参考書の方針に準拠（Flyway を使わないなら使わない）。
+各サブの固有方針はそれぞれの `CLAUDE.md` に分離している。
+ルート側の方針と矛盾する記述はサブ側に置かない。
 
----
+- [`todo-sample/CLAUDE.md`](todo-sample/CLAUDE.md) — 参考書写経 / 3 層 / MVC + Thymeleaf
+- [`todo-ex-sample/CLAUDE.md`](todo-ex-sample/CLAUDE.md) — REST / Flyway / オニオン + DDD / Yavi (`Validated<T>`) / 関数型
 
-## todo-ex-sample 固有方針
-
-- REST API（リクエスト/レスポンスはすべて JSON）
-- マイグレーション: **Flyway**
-- 設計: **オニオンアーキテクチャ + DDD**
-  - Domain / Application / Infrastructure / Presentation の 4 層
-  - 依存方向は常に Domain に向かう。Domain は他層に依存しない。
-- VO: Java `record` + **Yavi** で「生成時に必ず妥当」(always valid) を担保
-- **関数型プログラミング**志向（不変、副作用の分離、`Optional` などの活用）
-- UT / IT を明確に分離。IT は Testcontainers で実 PostgreSQL を使う。
-- テストはレイヤごとの責務に沿って書く（Domain は純粋ロジックの UT、Infrastructure は IT 中心）。
+> Claude Code は **作業ディレクトリ階層の CLAUDE.md を自動で読み込む** ため、
+> サブ配下で作業しているときは自然にサブの方針が反映される。
+> ルートで作業するときに固有方針が必要になったら、上記リンク先を都度参照する。
 
 ---
 
@@ -136,7 +119,7 @@ Initializr の生成物は単独プロジェクト前提なので、ルートに
 
 ```text
 spring-todo-sample/
-├── CLAUDE.md
+├── CLAUDE.md                   # モノレポ全体方針
 ├── compose.yaml                # PostgreSQL 1 コンテナ・2 DB（共通基盤）
 ├── db/
 │   └── init/
@@ -147,9 +130,11 @@ spring-todo-sample/
 ├── gradlew                     # ルート 1 本
 ├── gradlew.bat                 # ルート 1 本
 ├── todo-sample/
+│   ├── CLAUDE.md               # todo-sample 固有方針
 │   ├── build.gradle            # todo-sample 固有の依存のみ
 │   └── src/...
 └── todo-ex-sample/
+    ├── CLAUDE.md               # todo-ex-sample 固有方針
     ├── build.gradle            # todo-ex-sample 固有の依存のみ
     └── src/...
 ```
