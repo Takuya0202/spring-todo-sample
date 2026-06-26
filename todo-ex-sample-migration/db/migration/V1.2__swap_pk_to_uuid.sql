@@ -11,4 +11,4 @@ alter table todos rename column new_id to id;
 alter table todos add primary key (id);
 
 
-drop sequence if exsits todos_id_seq;
+drop sequence if exists todos_id_seq;
