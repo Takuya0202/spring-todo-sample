@@ -1,4 +1,12 @@
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'am.ik.yavi:yavi:0.14.1'
+	// Infrastructure 層 (MyBatis + PostgreSQL)
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5'
+	runtimeOnly 'org.postgresql:postgresql'
+
+	// IT (Testcontainers で実 PostgreSQL を起動)
+	testImplementation 'org.testcontainers:junit-jupiter'
+	testImplementation 'org.testcontainers:postgresql'
+	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.5'
 }
