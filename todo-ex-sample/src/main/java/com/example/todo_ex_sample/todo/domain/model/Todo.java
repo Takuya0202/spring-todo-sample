@@ -38,4 +38,22 @@ public record Todo(
             LocalDateTime updatedAt) {
         return new Todo(todoId, title, detail, createdAt, updatedAt);
     }
+
+    // todoを編集する。状態の変化
+    public Validated<Todo> change(String rawTitle, String rawDetail) {
+        Validated<Title> titleV = Title.of(rawTitle);
+
+        Validated<Optional<Detail>> detailV = (rawDetail == null || rawDetail.isBlank())
+                ? Validated.successWith(Optional.empty())
+                : Detail.of(rawDetail).map(Optional::of);
+
+        return Validations.apply(
+                (title, detail) -> new Todo(
+                        this.todoId,
+                        title,
+                        detail,
+                        this.createdAt,
+                        LocalDateTime.now()),
+                titleV, detailV);
+    }
 }
